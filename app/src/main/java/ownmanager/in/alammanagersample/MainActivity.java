@@ -1,7 +1,11 @@
 package ownmanager.in.alammanagersample;
+
 /**Aim : To create an Alarm manager with notification and time picker and cancel the alarm
- * check the Manifest
- *Tags : timePicker, Notification, Broadcast receiver*/
+ *      check the Manifest
+ *
+ *Commit 2:Made Alarm-Manager survive the reboots
+ * */
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     /**Method for alarm manager*/
     private void startAlarm(Calendar calendar) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
         Intent intent = new Intent(this,AlertBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),1,intent,0); //requestCode must be different for intents
 
@@ -62,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     }
 
     public void timePicker(View view) { // calling timepickerFragment
-        DialogFragment timepicker = new TimePickerFragment();
-        timepicker.show(getSupportFragmentManager(),"time picker");
+        DialogFragment timePicker = new TimePickerFragment();
+        timePicker.show(getSupportFragmentManager(),"time picker");
     }
 
     public void cancelAlarm(View view) {
@@ -77,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
         if (alarmManager != null) {
             alarmManager.cancel(pendingIntent);
-            //setExact -> Fire alarm at exact point
-            //AlarmManager.RTC_WAKEUP -> Wake the system if its goes off
         }
     }
 }
